@@ -1,0 +1,9 @@
+src/**
+out/*.test.js*
+out/**/*.map
+tsconfig.json
+.vscode/**
+.gitignore
+node_modules/diff/**
+!node_modules/diff/libcjs/**
+!node_modules/diff/package.json

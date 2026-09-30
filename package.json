@@ -1,0 +1,79 @@
+{
+  "name": "redline",
+  "displayName": "Redline",
+  "description": "Highlights code that AI agents write to disk, with Keep / Undo per change.",
+  "version": "0.0.1",
+  "publisher": "vilsonlleshi",
+  "author": "Vilson Lleshi",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "redline.review",
+        "title": "Redline: Review Pending Files"
+      },
+      {
+        "command": "redline.keepEverything",
+        "title": "Redline: Keep All Changes in All Files"
+      },
+      {
+        "command": "redline.keepFile",
+        "title": "Redline: Keep All Changes in This File",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "redline.undoFile",
+        "title": "Redline: Undo All Changes in This File",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "redline.nextFile",
+        "title": "Redline: Review Next File",
+        "icon": "$(arrow-right)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "redline.keepFile",
+          "when": "resourceScheme == file && resourcePath in redline.files",
+          "group": "navigation@1"
+        },
+        {
+          "command": "redline.undoFile",
+          "when": "resourceScheme == file && resourcePath in redline.files",
+          "group": "navigation@2"
+        },
+        {
+          "command": "redline.nextFile",
+          "when": "redline.count > 1 || redline.count == 1 && !(resourcePath in redline.files)",
+          "group": "navigation@3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test": "tsc -p . && node --test out/diff.test.js",
+    "package": "tsc -p . && vsce package --allow-missing-repository --skip-license"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "diff": "^9.0.0"
+  }
+}
